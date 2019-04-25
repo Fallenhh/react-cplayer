@@ -20,46 +20,61 @@ export default class Cplayer extends Component {
     point: PropTypes.number,
     showPlaylist: PropTypes.bool,
     autoplay: PropTypes.bool,
-    width: PropTypes.number,
+    width: PropTypes.string,
     size: PropTypes.string,
     style: PropTypes.string,
     showPlaylistButton: PropTypes.bool,
     dropDownMenuMode: PropTypes.oneOf(['bottom', 'top', 'none']),
     dark: PropTypes.bool,
     big: PropTypes.bool,
-    started: PropTypes.func,
-    ended: PropTypes.func,
-    play: PropTypes.func,
-    pause: PropTypes.func,
-    playmodechange: PropTypes.func,
-    openaudio: PropTypes.func,
-    volumechange: PropTypes.func,
-    timeupdate: PropTypes.func,
+    onStarted: PropTypes.func,
+    onEnded: PropTypes.func,
+    onPlay: PropTypes.func,
+    onPause: PropTypes.func,
+    onPlaymodechange: PropTypes.func,
+    onOpenaudio: PropTypes.func,
+    onVolumechange: PropTypes.func,
+    onTimeupdate: PropTypes.func,
   }
 
   static defaultProps = {
     onInit() { },
-    playlist: [
-      {
-        src: 'https://music.163.com/song/media/outer/url?id=500684228.mp3',
-        poster: 'http://p2.music.126.net/noJPpaixwhM7vS7Mfhs9sg==/109951163008620133.jpg',
-        name: 'Discovery',
-        artist: 'Electro-Light',
-        lyric: '',
-        sublyric: '',
-        album: 'Discovery'
-      },
-    ],
-    dark: false,
-    big: true,
+    playlist: [],
   }
 
   componentDidMount() {
-    const { onInit, ...restProps } = this.props;
+    const { onInit, onStarted, onEnded, onPlay, onPause, onPlaymodechange, onOpenaudio, onVolumechange, onTimeupdate, ...restProps } = this.props;
     const control = new cplayer({
       ...restProps,
-      element: this.container
+      element: this.container,
     });
+
+    if (onStarted) {
+      control.on('started', onStarted);
+    }
+    if (onEnded) {
+      control.on('ended', onEnded);
+    }
+    if (onPlay) {
+      control.on('play', onPlay);
+    }
+    if (onPause) {
+      control.on('pause', onPause);
+    }
+    if (onPlaymodechange) {
+      control.on('playmodechange', onPlaymodechange);
+    }
+    if (onOpenaudio) {
+      control.on('openaudio', onOpenaudio);
+    }
+    if (onVolumechange) {
+      control.on('volumechange', onVolumechange);
+    }
+    if (onTimeupdate) {
+      control.on('timeupdate', onTimeupdate);
+    }
+
+
     this.control = control;
     onInit(control);
   }
