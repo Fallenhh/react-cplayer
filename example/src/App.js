@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-import ExampleComponent from 'react-cplayer'
+import Cplayer from 'react-cplayer'
 
 export default class App extends Component {
-  render () {
+  render() {
     return (
       <div>
-        <ExampleComponent text='Modern React component module' />
+        <Cplayer big={false} />
       </div>
     )
   }
