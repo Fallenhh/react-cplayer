@@ -14,7 +14,7 @@ export default class App extends Component {
     return (
       <div>
         <Cplayer
-          big={false}
+          big={true}
           onInit={this.onInit}
           onPlay={this.onPlay}
           playlist={[
